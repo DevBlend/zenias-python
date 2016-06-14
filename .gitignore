@@ -1,0 +1,10 @@
+# Python files
+*.pyc
+
+# Python Virtualenv
+.python_env/
+
+# OS files
+.directory #Dolphin config files
+**/.DS_Store/ # macOS
+**thumbs.db # win thumbs
