@@ -14,6 +14,12 @@ php:
 node:
   description: Node box for Zenias
   main: https://github.com/atjonathan/zenias-box-node.git
+
+# Empty box with nothing but zenias and the heroku toolbelt installed
+empty:
+  description: An empty minimal/trusty64 box for Zenias
+  main: https://github.com/DevBlend/zenias-box-empty.git
+
 #python:
 #  description: Python for Zenias
 #  main: 
