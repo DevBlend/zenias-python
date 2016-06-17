@@ -15,13 +15,14 @@ from subprocess import call
 from git import Repo
 # pyyaml
 import yaml
-
 # Zenias function
 from zenias_functions import (z_available_lang,
                               z_check_dir,
                               z_check_file,
-                              z_check_language_config,
+                              z_error,
+                              z_get_language_repo,
                               z_info,
+                              z_is_local,
                               z_logo,
                               z_make_templates,
                               z_merge_two_dicts,
@@ -150,7 +151,7 @@ if('name' in args):
 print z_info('Attempting to create a box for ' +
              args.language + ' in "' + args.directory + '"...')
 # Language presence and repo
-repo = z_check_language_config(args.language, Z_REPOS)
+repo = z_get_language_repo(args.language, Z_REPOS)
 
 if repo is None:
     exit(1)
@@ -169,13 +170,25 @@ script = os.path.dirname(os.path.realpath(__file__))
 z_check_dir(target)
 
 # Getting repo
-print z_info('...Cloning...')
-Repo.clone_from(repo, target)
-print z_success('...Done.')
+if z_is_local(repo):
+    if os.path.exists(repo):
+        print z_info('The local zenias box exists. Copying...')
+        # Removing previously created dir
+        shutil.rmtree(target)
+        # Duplicating source box
+        shutil.copytree(repo, target)
+    else:
+        print z_error('The local directory ' + repo + ' don\'t exists.')
+        exit(1)
+    print z_info('...Copying...')
+else:
+    print z_info('...Cloning...')
+    print 'Getting box from Git repository'
+    Repo.clone_from(repo, target)
+    print z_info('...Cleaning downloaded repo...')
+    # Removing the .git folder
+    shutil.rmtree(os.path.join(target, '.git'))
 
-# Removing the .git folder
-print z_info('...Cleaning downloaded repo...')
-shutil.rmtree(os.path.join(target, '.git'))
 print z_success('...Done.')
 
 # Copy zenias_bin for usage in guest
