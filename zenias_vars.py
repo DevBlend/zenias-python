@@ -1,5 +1,5 @@
 #!/usr/bin/python
-Z_VERSION = '0.1.2'
+Z_VERSION = '1.1.1'
 
 Z_DEFAULT_YML = ("# In this file you can add your own custom boxes.\n"
                  "# The values here overrides the official ones.\n"
@@ -25,4 +25,12 @@ Z_DEFAULT_YML = ("# In this file you can add your own custom boxes.\n"
                  "# php:\n"
                  "#   description: My new description if any\n"
                  "#   main: http://new/git/repo\n"
-                 "#\n")
+                 "#\n"
+                 "# You can also add custom local boxes here. This is really"
+                 " useful for box development...\n"
+                 "#\n"
+                 "# Example: Box in a local folder:\n"
+                 "# --------\n"
+                 "# php:\n"
+                 "#   description: My local php box\n"
+                 "#   main: /path/to/the/box/\n")

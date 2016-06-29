@@ -4,11 +4,12 @@
 import io
 # For some os-related path manipulations
 import os
-# import sys
 # Mini template engine
 from string import Template
 # Zenias version
 from zenias_vars import Z_VERSION
+# URL parser
+import urlparse
 
 
 # Displays a nice logo
@@ -27,22 +28,22 @@ def z_logo():
 
 # Nice messages
 def z_error(msg):
-    return ("\n" + OutColors.LRED + 'Error: ' +
+    return ("\n" + OutColors.LRED + '[ Error:   ] ' +
             OutColors.RED + msg + OutColors.ENDC + "\n")
 
 
 def z_warning(msg):
-    return ("\n" + OutColors.LYELLOW + 'Error: ' +
+    return ("\n" + OutColors.LYELLOW + '[ Warning: ] ' +
             OutColors.YELLOW + msg + OutColors.ENDC + "\n")
 
 
 def z_info(msg):
-    return (OutColors.LBLUE + 'Info: ' +
+    return (OutColors.LBLUE + '[ Info:    ] ' +
             OutColors.BLUE + msg + OutColors.ENDC)
 
 
 def z_success(msg):
-    return (OutColors.LGREEN + 'Error: ' +
+    return (OutColors.LGREEN + '[ Success: ] ' +
             OutColors.GREEN + msg + OutColors.ENDC)
 
 
@@ -136,7 +137,7 @@ def z_available_lang(lang, config):
 # Checks if a given language/module exists in config, and if it's valid.
 # For nicer implementations, we should remove the exit() from there and return
 # true/false
-def z_check_language_config(lang, config):
+def z_get_language_repo(lang, config):
     repo = None
     if(lang not in config):
         # Check in modules
@@ -228,3 +229,8 @@ def z_check_file(a_file, content):
         the_file = open(a_file, 'a')
         the_file.write(str(content))
         the_file.close()
+
+
+# Checks if the given URL is a local path
+def z_is_local(url):
+    return not bool(urlparse.urlparse(url).netloc)
